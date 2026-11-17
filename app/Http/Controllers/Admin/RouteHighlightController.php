@@ -49,6 +49,8 @@ class RouteHighlightController extends Controller
             $validated['image'] = 'assets/images/banners/' . $filename;
         }
 
+        unset($validated['image_file']);
+
         $highlight->update($validated);
 
         return back()->with('success', 'Route highlight banner section updated successfully!');

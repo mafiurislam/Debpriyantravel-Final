@@ -42,6 +42,8 @@ class ServiceController extends Controller
             $validated['image'] = 'assets/images/' . $filename;
         }
 
+        unset($validated['image_file']);
+
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;
 
@@ -77,6 +79,8 @@ class ServiceController extends Controller
             $file->move(public_path('assets/images'), $filename);
             $validated['image'] = 'assets/images/' . $filename;
         }
+
+        unset($validated['image_file']);
 
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;

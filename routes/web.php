@@ -64,7 +64,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Section 2: Route Highlights Banner
         Route::get('/route-highlight', [RouteHighlightController::class, 'edit'])->name('route-highlight.edit');
-        Route::post('/route-highlight', [RouteHighlightController::class, 'update'])->name('route-highlight.update');
+        Route::match(['post', 'put'], '/route-highlight', [RouteHighlightController::class, 'update'])->name('route-highlight.update');
 
         // Section 3: Core Services
         Route::resource('services', ServiceController::class)->except(['show']);
@@ -83,7 +83,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Section 8: Site Settings
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::match(['post', 'put'], '/settings', [SettingController::class, 'update'])->name('settings.update');
 
         // Section 9: Booking Inquiries
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])->name('inquiries.index');

@@ -42,6 +42,8 @@ class VideoReviewController extends Controller
             $validated['thumbnail'] = 'assets/images/' . $filename;
         }
 
+        unset($validated['thumbnail_file']);
+
         if (empty($validated['thumbnail'])) {
             $validated['thumbnail'] = 'https://img.youtube.com/vi/' . $validated['youtube_id'] . '/hqdefault.jpg';
         }
@@ -81,6 +83,8 @@ class VideoReviewController extends Controller
             $file->move(public_path('assets/images'), $filename);
             $validated['thumbnail'] = 'assets/images/' . $filename;
         }
+
+        unset($validated['thumbnail_file']);
 
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;

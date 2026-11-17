@@ -41,6 +41,8 @@ class HeroSliderController extends Controller
             $validated['image'] = 'assets/images/slider/' . $filename;
         }
 
+        unset($validated['image_file']);
+
         if (empty($validated['image'])) {
             $validated['image'] = 'assets/images/slider/slide-sujata-tempo.webp';
         }
@@ -79,6 +81,8 @@ class HeroSliderController extends Controller
             $file->move(public_path('assets/images/slider'), $filename);
             $validated['image'] = 'assets/images/slider/' . $filename;
         }
+
+        unset($validated['image_file']);
 
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;

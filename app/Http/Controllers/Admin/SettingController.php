@@ -16,10 +16,13 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        $inputs = $request->except(['_token']);
+        $inputs = $request->except(['_token', '_method']);
 
         foreach ($inputs as $key => $value) {
-            Setting::set($key, $value);
+            Setting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
         }
 
         return back()->with('success', 'Site settings updated successfully!');

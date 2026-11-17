@@ -97,4 +97,53 @@ class ExampleTest extends TestCase
             'name' => 'Sourav Ganguly',
         ]);
     }
+
+    /**
+     * Test admin can update sections without 500 error.
+     */
+    public function test_admin_can_update_all_sections(): void
+    {
+        $user = User::first();
+        $this->actingAs($user);
+
+        // 1. Test Service update
+        $service = \App\Models\Service::first();
+        $resp = $this->put('/admin/services/' . $service->id, [
+            'title' => 'Updated Dzire Rental',
+            'bengali_subtitle' => 'আপডেটেড গাড়ি ভাড়া',
+            'category' => 'Rental',
+            'description' => 'Updated description text',
+            'icon' => 'fa-solid fa-car',
+            'image' => $service->image,
+            'btn_text' => 'Book Now',
+            'whatsapp_message' => 'Hello test message',
+            'sort_order' => 1,
+            'is_active' => '1',
+        ]);
+        $resp->assertRedirect('/admin/services');
+        $this->assertDatabaseHas('services', ['title' => 'Updated Dzire Rental']);
+
+        // 2. Test Settings update
+        $resp = $this->post('/admin/settings', [
+            'site_name' => 'Debpriyan Travels Live',
+            'phone_1' => '9433053668',
+            'phone_2' => '9432430360',
+        ]);
+        $resp->assertRedirect();
+        $this->assertDatabaseHas('settings', ['key' => 'site_name', 'value' => 'Debpriyan Travels Live']);
+
+        // 3. Test Route Highlight update
+        $resp = $this->put('/admin/route-highlight', [
+            'title' => 'All India Bus Booking Live',
+            'badge' => 'PAN-INDIA',
+            'bengali_tagline' => 'সেরা পরিষেবা',
+            'description' => 'Test description',
+            'routes' => 'KOLKATA, DELHI, MUMBAI',
+            'phone' => '9433053668',
+            'email' => 'test@example.com',
+            'address' => 'Kolkata',
+        ]);
+        $resp->assertRedirect();
+        $this->assertDatabaseHas('route_highlights', ['title' => 'All India Bus Booking Live']);
+    }
 }
