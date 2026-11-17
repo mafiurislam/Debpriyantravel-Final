@@ -1,1 +1,1 @@
-*.sqlite*
+# SQLite database tracked for zero-config production deployment
